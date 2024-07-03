@@ -1,13 +1,18 @@
 package com.scaler.backendprojectecomm.controllers;
 
+import com.scaler.backendprojectecomm.dtos.FakeStoreDto;
+import com.scaler.backendprojectecomm.exceptions.ProductNotFound;
 import com.scaler.backendprojectecomm.models.Product;
 import com.scaler.backendprojectecomm.services.ProductService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/products")
 public class ProductController {
     //ProductService is an interface
@@ -27,8 +32,13 @@ public class ProductController {
 
     //get the product based on id
     @GetMapping("/{id}")
-    public Product getSingleProduct(@PathVariable("id") long id){
-        return productService.getSingleProduct(id);
+    public ResponseEntity<Product> getSingleProduct(@PathVariable("id") long id) throws ProductNotFound {
+
+
+        ResponseEntity<Product> response = new ResponseEntity<>(
+                productService.getSingleProduct(id), HttpStatus.OK
+        );
+        return response;
     }
 
     //get all products
@@ -47,5 +57,26 @@ public class ProductController {
     @GetMapping("/category/{category}")
     public List<Product> getProductsByCategory(@PathVariable("category") String category) {
         return productService.getProductsByCategory(category);
+    }
+
+    @PatchMapping("/{id}")
+    public Product updateProduct(@PathVariable("id") long id,@RequestBody Product product)
+    {
+
+        return product;
+    }
+
+    @PutMapping("/{id}")
+    public Product replaceProduct(@PathVariable("id") long id,@RequestBody Product product)
+    {
+
+        return product;
+    }
+
+    @DeleteMapping("/{id}")
+    public Product deleteProduct(@PathVariable("id") long id,@RequestBody Product product)
+    {
+
+        return product;
     }
 }
