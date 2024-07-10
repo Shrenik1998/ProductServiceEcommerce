@@ -101,24 +101,21 @@ public class FakeStoreProductService implements ProductService{
     @Override
     public Product updateProduct(long id, Product product) {
         FakeStoreDto fakeStoreProductDto = new FakeStoreDto();
-        if(product.getTitle()!=null)
-        {
-            fakeStoreProductDto.setTitle(product.getTitle());
-        }
-        if(product.getDescription()!=null)
-        {
-            fakeStoreProductDto.setDescription(product.getDescription());
-        }
-        if(product.getCategory().getName()!=null)
-        {
+
+        fakeStoreProductDto.setTitle(product.getTitle());
+
+        fakeStoreProductDto.setDescription(product.getDescription());
+
+        if (product.getCategory() != null) {
             fakeStoreProductDto.setCategory(product.getCategory().getName());
         }
 
         fakeStoreProductDto.setPrice(product.getPrice());
 
 
-        FakeStoreDto fakeStoreDto = restTemplate.patchForObject("https://fakestoreapi.com/products/" + id,
-                fakeStoreProductDto, FakeStoreDto.class);
+        FakeStoreDto fakeStoreDto = restTemplate.patchForObject("https://fakestoreapi.com/products/" + id,fakeStoreProductDto
+        ,FakeStoreDto.class);
+
         return convertToProduct(fakeStoreDto);
     }
 
