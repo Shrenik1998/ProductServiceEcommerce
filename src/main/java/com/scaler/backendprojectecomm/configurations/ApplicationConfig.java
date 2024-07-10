@@ -10,8 +10,13 @@ import org.springframework.web.client.RestTemplate;
 import java.net.http.HttpClient;
 import java.util.Arrays;
 
+//library classes cannot be updated
+//we cannot add @annotations for the library classes
+//@Configuration tells been that this is a special class using which beans are created
 @Configuration
 public class ApplicationConfig {
+
+    //spring will create object of RestTemplate and add it to the application context
     @Bean
     public RestTemplate getRestTemplate() {
         RestTemplate restTemplate = new RestTemplate();

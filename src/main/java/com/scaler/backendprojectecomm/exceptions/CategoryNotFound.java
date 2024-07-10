@@ -1,10 +1,10 @@
 package com.scaler.backendprojectecomm.exceptions;
 
-
+//custom exception class created for CategoryNotFound
 public class CategoryNotFound extends Exception {
     private String category;
-    public CategoryNotFound(String categoryy,String message) {
+    public CategoryNotFound(String category,String message) {
         super(message);
-        this.category = categoryy;
+        this.category = category;
     }
 }

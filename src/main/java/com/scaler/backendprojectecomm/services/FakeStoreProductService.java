@@ -19,6 +19,7 @@ public class FakeStoreProductService implements ProductService{
 
     private RestTemplate restTemplate;
 
+    //Dependency Injection
     FakeStoreProductService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }

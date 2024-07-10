@@ -33,6 +33,8 @@ public class ProductController {
     }
 
     //get the product based on id
+    //this function will catch "ProductNotFound" exception object thrown by the product service
+    //and throw it to the controller advice
     @GetMapping("/{id}")
     public ResponseEntity<Product> getSingleProduct(@PathVariable("id") long id) throws ProductNotFound {
 
@@ -54,29 +56,36 @@ public class ProductController {
         return productService.LimitProducts(limit);
     }
 
+    //get categories of all the products
     @GetMapping("/categories")
     public List<Category> getAllCategories() {
         return productService.getAllCategories();
     }
 
     //get products by category
+    //get the product based on id
+    //this function will catch "ProductNotFound" exception object thrown by the product service
+    //and throw it to the controller advice
     @GetMapping("/category/{category}")
     public List<Product> getProductsByCategory(@PathVariable("category") String category) throws CategoryNotFound {
         return productService.getProductsByCategory(category);
     }
 
+    //update product by id
     @PatchMapping("/{id}")
     public Product updateProduct(@PathVariable("id") long id,@RequestBody Product product)
     {
         return productService.updateProduct(id, product);
     }
 
+    //replace product by id
     @PutMapping("/{id}")
     public Product replaceProduct(@PathVariable("id") long id,@RequestBody Product product)
     {
         return productService.replaceProduct(id, product);
     }
 
+    //delete product by id
     @DeleteMapping("/{id}")
     public Product deleteProduct(@PathVariable("id") long id,@RequestBody Product product)
     {
