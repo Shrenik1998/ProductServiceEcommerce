@@ -95,25 +95,16 @@ public class FakeStoreProductService implements ProductService{
 
     @Override
     public List<Product> getProductsByCategory(String category) throws CategoryNotFound {
-        List<Category> categories = getAllCategories();
-        boolean flag = false;
-
-        for (Category cat : categories) {
-            if(cat.getName().equals(category))
-            {
-                flag = true;
-                break;
-            }
-        }
-        if(!flag)
-        {
-            throw new CategoryNotFound(category,"Category for "+category+" does not exist");
-        }
 
         FakeStoreDto[] fakeStoreProductDto = restTemplate.getForObject(
                 "https://fakestoreapi.com/products/category/"+category,
                 FakeStoreDto[].class
         );
+
+        if(fakeStoreProductDto.length==0)
+        {
+            throw new CategoryNotFound(category,"Category for "+category+" does not exist");
+        }
 
         //Convert FakeStoreProductDto into Product.
         List<Product> products = new ArrayList<>();
