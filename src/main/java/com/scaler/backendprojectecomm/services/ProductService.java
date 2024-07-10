@@ -16,5 +16,7 @@ public interface ProductService {
 
     Product replaceProduct(long id,Product product);
 
-    Product depeteProduct(long id,Product product);
+    Product deleteProduct(long id,Product product);
+
+    Product addProduct(Product product);
 }

@@ -34,7 +34,6 @@ public class ProductController {
     @GetMapping("/{id}")
     public ResponseEntity<Product> getSingleProduct(@PathVariable("id") long id) throws ProductNotFound {
 
-
         ResponseEntity<Product> response = new ResponseEntity<>(
                 productService.getSingleProduct(id), HttpStatus.OK
         );
@@ -62,21 +61,26 @@ public class ProductController {
     @PatchMapping("/{id}")
     public Product updateProduct(@PathVariable("id") long id,@RequestBody Product product)
     {
-
-        return product;
+        return productService.updateProduct(id, product);
     }
 
     @PutMapping("/{id}")
     public Product replaceProduct(@PathVariable("id") long id,@RequestBody Product product)
     {
-
-        return product;
+        return productService.replaceProduct(id, product);
     }
 
     @DeleteMapping("/{id}")
     public Product deleteProduct(@PathVariable("id") long id,@RequestBody Product product)
     {
-
-        return product;
+        return productService.deleteProduct(id,product);
     }
+
+    @PostMapping()
+    public Product addNewProduct(@RequestBody Product product)
+    {
+        return productService.addProduct(product);
+    }
+
+
 }
