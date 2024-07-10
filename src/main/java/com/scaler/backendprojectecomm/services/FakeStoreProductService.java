@@ -1,6 +1,7 @@
 package com.scaler.backendprojectecomm.services;
 
 import com.scaler.backendprojectecomm.dtos.FakeStoreDto;
+import com.scaler.backendprojectecomm.exceptions.CategoryNotFound;
 import com.scaler.backendprojectecomm.exceptions.ProductNotFound;
 import com.scaler.backendprojectecomm.models.Category;
 import com.scaler.backendprojectecomm.models.Product;
@@ -12,10 +13,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.springframework.http.*;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 
 @Service
 public class FakeStoreProductService implements ProductService{
@@ -82,7 +79,37 @@ public class FakeStoreProductService implements ProductService{
     }
 
     @Override
-    public List<Product> getProductsByCategory(String category) {
+    public List<Category> getAllCategories() {
+
+        String[] categories = restTemplate.getForObject("https://fakestoreapi.com/products/categories"
+        ,String[].class);
+        List<Category> categories1 = new ArrayList<>();
+        for (String cat : categories) {
+            Category category = new Category();
+            category.setName(cat);
+            categories1.add(category);
+        }
+
+        return categories1;
+    }
+
+    @Override
+    public List<Product> getProductsByCategory(String category) throws CategoryNotFound {
+        List<Category> categories = getAllCategories();
+        boolean flag = false;
+
+        for (Category cat : categories) {
+            if(cat.getName().equals(category))
+            {
+                flag = true;
+                break;
+            }
+        }
+        if(!flag)
+        {
+            throw new CategoryNotFound(category,"Category for "+category+" does not exist");
+        }
+
         FakeStoreDto[] fakeStoreProductDto = restTemplate.getForObject(
                 "https://fakestoreapi.com/products/category/"+category,
                 FakeStoreDto[].class

@@ -1,6 +1,7 @@
 package com.scaler.backendprojectecomm.controllerAdvice;
 
 import com.scaler.backendprojectecomm.dtos.Exceptiondto;
+import com.scaler.backendprojectecomm.exceptions.CategoryNotFound;
 import com.scaler.backendprojectecomm.exceptions.ProductNotFound;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,4 +24,18 @@ public class GlobalExceptionHandler {
 
         return response;
     }
+
+    @ExceptionHandler(CategoryNotFound.class)
+    public ResponseEntity<Exceptiondto> handleCatogeryNotFoundException(CategoryNotFound exception){
+        Exceptiondto exceptiondto = new Exceptiondto();
+        exceptiondto.setMessage(exception.getMessage());
+        exceptiondto.setSolution("Please Enter a valid category");
+
+        ResponseEntity<Exceptiondto> response = new ResponseEntity<>(
+                exceptiondto, HttpStatus.NOT_FOUND
+        );
+
+        return response;
+    }
+
 }

@@ -1,5 +1,7 @@
 package com.scaler.backendprojectecomm.services;
+import com.scaler.backendprojectecomm.exceptions.CategoryNotFound;
 import com.scaler.backendprojectecomm.exceptions.ProductNotFound;
+import com.scaler.backendprojectecomm.models.Category;
 import com.scaler.backendprojectecomm.models.Product;
 import java.util.*;
 
@@ -10,7 +12,9 @@ public interface ProductService {
 
     List<Product> LimitProducts(int limitNo);
 
-    List<Product> getProductsByCategory(String category);
+    List<Category> getAllCategories();
+
+    List<Product> getProductsByCategory(String category) throws CategoryNotFound;
 
     Product updateProduct(long id,Product product);
 

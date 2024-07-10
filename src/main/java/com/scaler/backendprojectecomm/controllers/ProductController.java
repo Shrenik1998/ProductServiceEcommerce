@@ -1,7 +1,9 @@
 package com.scaler.backendprojectecomm.controllers;
 
 import com.scaler.backendprojectecomm.dtos.FakeStoreDto;
+import com.scaler.backendprojectecomm.exceptions.CategoryNotFound;
 import com.scaler.backendprojectecomm.exceptions.ProductNotFound;
+import com.scaler.backendprojectecomm.models.Category;
 import com.scaler.backendprojectecomm.models.Product;
 import com.scaler.backendprojectecomm.services.ProductService;
 import org.springframework.http.HttpStatus;
@@ -52,9 +54,14 @@ public class ProductController {
         return productService.LimitProducts(limit);
     }
 
+    @GetMapping("/categories")
+    public List<Category> getAllCategories() {
+        return productService.getAllCategories();
+    }
+
     //get products by category
     @GetMapping("/category/{category}")
-    public List<Product> getProductsByCategory(@PathVariable("category") String category) {
+    public List<Product> getProductsByCategory(@PathVariable("category") String category) throws CategoryNotFound {
         return productService.getProductsByCategory(category);
     }
 
