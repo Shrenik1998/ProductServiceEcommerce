@@ -6,6 +6,7 @@ import com.scaler.backendprojectecomm.exceptions.ProductNotFound;
 import com.scaler.backendprojectecomm.models.Category;
 import com.scaler.backendprojectecomm.models.Product;
 import com.scaler.backendprojectecomm.services.ProductService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +29,7 @@ public class ProductController {
     //spring will create FakeStoreProductService object and insert it in the below constructor
     //productService is parent class, hence it can point to the child class in this case FakeStoreProductService
     //the process of creating dependent obejct and injecting is called dependency injection
-    ProductController(ProductService productService) {
+    ProductController(@Qualifier("fakeStoreProductService") ProductService productService) {
         this.productService = productService;
     }
 
