@@ -16,11 +16,11 @@ public interface ProductService {
 
     List<Product> getProductsByCategory(String category) throws CategoryNotFound;
 
-    Product updateProduct(long id,Product product);
+    Product updateProduct(long id,Product product) throws ProductNotFound, CategoryNotFound;
 
-    Product replaceProduct(long id,Product product);
+    Product replaceProduct(long id,Product product) throws ProductNotFound, CategoryNotFound;
 
-    Product deleteProduct(long id,Product product);
+    void deleteProduct(long id);
 
     Product addProduct(Product product);
 }

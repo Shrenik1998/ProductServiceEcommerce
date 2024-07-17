@@ -29,7 +29,7 @@ public class ProductController {
     //spring will create FakeStoreProductService object and insert it in the below constructor
     //productService is parent class, hence it can point to the child class in this case FakeStoreProductService
     //the process of creating dependent obejct and injecting is called dependency injection
-    ProductController(@Qualifier("fakeStoreProductService") ProductService productService) {
+    ProductController(@Qualifier("selfProductService") ProductService productService) {
         this.productService = productService;
     }
 
@@ -74,23 +74,21 @@ public class ProductController {
 
     //update product by id
     @PatchMapping("/{id}")
-    public Product updateProduct(@PathVariable("id") long id,@RequestBody Product product)
-    {
+    public Product updateProduct(@PathVariable("id") long id,@RequestBody Product product) throws ProductNotFound, CategoryNotFound {
         return productService.updateProduct(id, product);
     }
 
     //replace product by id
     @PutMapping("/{id}")
-    public Product replaceProduct(@PathVariable("id") long id,@RequestBody Product product)
-    {
+    public Product replaceProduct(@PathVariable("id") long id,@RequestBody Product product) throws ProductNotFound, CategoryNotFound {
         return productService.replaceProduct(id, product);
     }
 
     //delete product by id
     @DeleteMapping("/{id}")
-    public Product deleteProduct(@PathVariable("id") long id,@RequestBody Product product)
+    public void deleteProduct(@PathVariable("id") long id)
     {
-        return productService.deleteProduct(id,product);
+        productService.deleteProduct(id);
     }
 
     @PostMapping()
