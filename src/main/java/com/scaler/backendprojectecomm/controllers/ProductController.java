@@ -30,7 +30,7 @@ public class ProductController {
     //spring will create FakeStoreProductService object and insert it in the below constructor
     //productService is parent class, hence it can point to the child class in this case FakeStoreProductService
     //the process of creating dependent obejct and injecting is called dependency injection
-    ProductController(@Qualifier("selfProductService") ProductService productService) {
+    ProductController(@Qualifier("fakeStoreProductService") ProductService productService) {
         this.productService = productService;
     }
 

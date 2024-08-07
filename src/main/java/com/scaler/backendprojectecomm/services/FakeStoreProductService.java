@@ -6,6 +6,7 @@ import com.scaler.backendprojectecomm.exceptions.ProductNotFound;
 import com.scaler.backendprojectecomm.models.Category;
 import com.scaler.backendprojectecomm.models.Product;
 import org.springframework.data.domain.Page;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpMessageConverterExtractor;
@@ -19,14 +20,25 @@ import java.util.List;
 public class FakeStoreProductService implements ProductService{
 
     private RestTemplate restTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
 
     //Dependency Injection
-    FakeStoreProductService(RestTemplate restTemplate) {
+    public FakeStoreProductService(RestTemplate restTemplate,RedisTemplate redisTemplate) {
         this.restTemplate = restTemplate;
+        this.redisTemplate = redisTemplate;
     }
 
     @Override
     public Product getSingleProduct(long productId) throws ProductNotFound {
+
+        Product p = (Product) redisTemplate.opsForHash().get("PRODUCT","PRODUCT_" + productId);
+
+        if(p != null) {
+            //Cache Hit
+            System.out.println("-------------------redis---------------------------");
+            return p;
+        }
+
         FakeStoreDto fakeStoreProductDto = restTemplate.getForObject(
                 "https://fakestoreapi.com/products/" + productId,
                 FakeStoreDto.class
@@ -38,7 +50,12 @@ public class FakeStoreProductService implements ProductService{
         }
 
         //Convert FakeStoreProductDto into Product
-        return convertToProduct(fakeStoreProductDto);
+        Product product = convertToProduct(fakeStoreProductDto);
+
+        //Cache miss
+        redisTemplate.opsForHash().put("PRODUCTS", "PRODUCT_" + productId, product);
+
+        return product;
     }
 
     @Override
