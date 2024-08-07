@@ -3,12 +3,14 @@ import com.scaler.backendprojectecomm.exceptions.CategoryNotFound;
 import com.scaler.backendprojectecomm.exceptions.ProductNotFound;
 import com.scaler.backendprojectecomm.models.Category;
 import com.scaler.backendprojectecomm.models.Product;
+import org.springframework.data.domain.Page;
+
 import java.util.*;
 
 public interface ProductService {
     Product getSingleProduct(long id) throws ProductNotFound;
 
-    List<Product> getAllProducts();
+    Page<Product> getAllProducts(int pageNumber, int pageSize);
 
     List<Product> LimitProducts(int limitNo);
 

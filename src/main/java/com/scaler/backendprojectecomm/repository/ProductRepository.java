@@ -2,6 +2,8 @@ package com.scaler.backendprojectecomm.repository;
 
 import com.scaler.backendprojectecomm.models.Product;
 import com.scaler.backendprojectecomm.projections.ProductWithIdAndTitle;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -16,7 +18,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Optional<Product> findById(Long id);
 
     //Declared Query
-    List<Product> findAll();
+    Page<Product> findAll(Pageable pageable);
 
     //Declared Query
     List<Product> findByCategoryName(String categoryName);

@@ -7,6 +7,7 @@ import com.scaler.backendprojectecomm.models.Category;
 import com.scaler.backendprojectecomm.models.Product;
 import com.scaler.backendprojectecomm.services.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -46,9 +47,10 @@ public class ProductController {
     }
 
     //get all products
+    //localhost:8080/products?pageNumber=0&pageSize=3
     @GetMapping()
-    public List<Product> getAllProducts() {
-        return productService.getAllProducts();
+    public Page<Product> getAllProducts(@RequestParam("pageNumber") int pageNumber, @RequestParam("pageSize") int pageSize) {
+        return productService.getAllProducts(pageNumber, pageSize);
     }
 
     //limit the number of products from the result

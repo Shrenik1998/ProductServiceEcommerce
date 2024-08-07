@@ -5,6 +5,7 @@ import com.scaler.backendprojectecomm.exceptions.CategoryNotFound;
 import com.scaler.backendprojectecomm.exceptions.ProductNotFound;
 import com.scaler.backendprojectecomm.models.Category;
 import com.scaler.backendprojectecomm.models.Product;
+import org.springframework.data.domain.Page;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpMessageConverterExtractor;
@@ -41,7 +42,7 @@ public class FakeStoreProductService implements ProductService{
     }
 
     @Override
-    public List<Product> getAllProducts() {
+    public Page<Product> getAllProducts(int pageNumber, int pageSize) {
         FakeStoreDto[] fakeStoreProductDto = restTemplate.getForObject(
                 "https://fakestoreapi.com/products",
                 FakeStoreDto[].class
@@ -52,7 +53,7 @@ public class FakeStoreProductService implements ProductService{
         for (FakeStoreDto fakeStoreProductDto1 : fakeStoreProductDto) {
             products.add(convertToProduct(fakeStoreProductDto1));
         }
-        return products;
+        return (Page<Product>) products;
     }
 
     //get no of products
