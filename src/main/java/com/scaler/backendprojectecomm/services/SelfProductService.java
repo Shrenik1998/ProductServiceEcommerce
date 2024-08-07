@@ -16,6 +16,7 @@ public class SelfProductService implements ProductService {
     ProductRepository productRepository;
     CategoryRepository categoryRepository;
 
+    //Dependency Injection by the IOC(Inversion of control) container
     public SelfProductService(ProductRepository productRepository,CategoryRepository categoryRepository) {
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;

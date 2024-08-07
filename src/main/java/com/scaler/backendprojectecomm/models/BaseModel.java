@@ -11,11 +11,11 @@ import java.util.Date;
 
 @Getter
 @Setter
-@MappedSuperclass
+@MappedSuperclass//attributes of this class will be columns for the inherited class tables
 public class BaseModel {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id//to indicate that it is a primary key
+    @GeneratedValue(strategy = GenerationType.IDENTITY)//to autoincrement id
     private long id;
     private Date createdAt;
     private Date updatedAt;

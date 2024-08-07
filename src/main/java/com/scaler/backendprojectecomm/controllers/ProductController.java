@@ -25,7 +25,7 @@ public class ProductController {
     //ProductController class is dependent on the productService
     //object of interface cannot be created
     //spring will search the class that has implemented ProductService interface
-    //spring will inject the class that has implemented this inteface in this case FakeStoreProductService
+    //spring will inject the class that has implemented this interface in this case FakeStoreProductService
     //spring will create FakeStoreProductService object and insert it in the below constructor
     //productService is parent class, hence it can point to the child class in this case FakeStoreProductService
     //the process of creating dependent obejct and injecting is called dependency injection

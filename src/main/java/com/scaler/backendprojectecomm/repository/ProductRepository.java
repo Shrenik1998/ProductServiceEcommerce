@@ -9,20 +9,27 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
+@Repository                                           //<Object,Primary Key data type Of Object>
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
+    //Declared Query
     Optional<Product> findById(Long id);
 
+    //Declared Query
     List<Product> findAll();
 
+    //Declared Query
     List<Product> findByCategoryName(String categoryName);
 
+    //save is used to insert and update
+    //if id is given, and it exists in database data will be updated, else new data will be inserted
+    //Declared Query
     Product save(Product product);
 
+    //Declared Query
     void deleteById(Long id);
 
-    //HQL
+    //HQL(Hibernate query language)
     @Query("select p.id as id, p.title as title from Product p where p.id = :x")
     List<ProductWithIdAndTitle> randomSearchMethod(Long x);
 
